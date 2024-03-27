@@ -2,11 +2,17 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import React from "react";
 import Colors from "../../utils/Colors";
 import dashboard from "../../../assets/dashboard.png";
+import services from "../../utils/services";
+import { useRouter } from "expo-router";
 
 export default function LoginScreen() {
 
-  const handleSignIn = () => {
-console.log("gg")
+  const router = useRouter()
+  const handleSignIn = async () => {
+    console.log("gg")
+
+    // await services.storeData('login', true)
+    router.replace("/login/loginPage")
   }
   return (
     <View style={{ display: "flex", alignItems: "center" }}>
