@@ -133,3 +133,11 @@ export const defaultStyles = StyleSheet.create({
     },
 });
 
+export const dateFormatter =(PassDate)=>{
+   
+        const date = new Date(PassDate)
+        const day = String(date.getDate()).padStart(2, '0')
+        const month = date.toLocaleString('default', { month: 'short' })
+        const year = String(date.getFullYear()).slice(-2)
+        return `${day}-${month}-${year}`
+    }

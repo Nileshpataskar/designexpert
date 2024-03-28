@@ -13,6 +13,7 @@ import {
     ToastAndroid,
 } from "react-native";
 import { customStyle, defaultStyles } from "../../utils/Styling";
+import services from "../../utils/services";
 
 // https://github.com/clerkinc/clerk-expo-starter/blob/main/components/OAuth.tsx
 // import { useWarmUpBrowser } from '@/hooks/useWarmUpBrowser';
@@ -23,7 +24,7 @@ const LoginPage = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const handleSignIn = () => {
+    const handleSignIn = async() => {
         // Log the email and password
         console.log("Email:", email);
         console.log("Password:", password);
@@ -59,14 +60,21 @@ const LoginPage = () => {
             })
             .then((data) => {
                 console.log("Response from server:", data);
-                console.log("key:", data.key);
-                // Handle response as needed
-                if (data.key) {
-                    AsyncStorage.setItem("token", data.key);
-                    setEmail(" ");
-                    setPassword(" ");
-                    router.replace("/");
+                console.log("key:", data.key); 
+
+                const token= data.key
+                if(token){
+                     services.storeData('login',"true")
+                     services.storeData('token',token)
+                    router.replace('/')
                 }
+                // Handle response as needed
+                // if (data.key) {
+                //     AsyncStorage.setItem("token", data.key);
+                //     setEmail(" ");
+                //     setPassword(" ");
+                //     router.replace("/");
+                // }
             })
             .catch((error) => {
                 console.error("Error:", error);

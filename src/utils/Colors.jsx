@@ -1,5 +1,6 @@
 export default {
     BLACK: '#000',
+    PURPLE:'#8B42FC',
     WHITE: '#FFF',
     PRIMARY: '#161834',
     SUBTITLE: "#4e5067",
@@ -10,4 +11,5 @@ export default {
     ERROR: '#FF6166',
     SUCCESS: '#619883',
     WARNING: '#FFCA64',
+    INFO:'#5bc0de'
 }
