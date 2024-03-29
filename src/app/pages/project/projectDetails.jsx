@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import React, { useEffect, useState } from "react";
 import { router, useLocalSearchParams } from "expo-router";
 import { getRequest } from "../../../utils/fetch";
@@ -6,18 +6,17 @@ import { Ionicons } from "@expo/vector-icons";
 import Colors from "../../../utils/Colors";
 import TaskPieChart from "../../../components/ProjectDetail/TaskPieChart";
 import ProjectInfo from "../../../components/ProjectDetail/ProjectInfo";
+import ScrollableHeader from "../../../components/ProjectDetail/ScrollableHeader";
+import { SafeAreaView } from "react-native-safe-area-context";
 export default function ProjectDetails() {
   const { projectId } = useLocalSearchParams();
   const [projectData, setProjectData] = useState([]);
-  const [milestoneData, setMilestoneData] = useState([]);
   const [clients, setClients] = useState([]);
   const [projectStats, setProjectStats] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    console.log("project", projectId);
     getProjectData();
-    getMilestoneData();
     getClients();
     getProjectStats();
   }, [projectId]);
@@ -33,22 +32,10 @@ export default function ProjectDetails() {
         console.log("Error", error);
       });
   };
-  const getMilestoneData = async () => {
-    getRequest(`dc/api/milestones/?project__id=${projectId}`)
-      .then((response) => {
-        console.log("results:", response.data);
-
-        setMilestoneData(response.data);
-      })
-      .catch((error) => {
-        console.log("Error", error);
-      });
-  };
+ 
   const getClients = () => {
     getRequest(`dc/api/clients/`)
       .then((response) => {
-        // console.log('Clients data:', response.data)
-
         setClients(response.data);
       })
       .catch((error) => {
@@ -69,13 +56,24 @@ export default function ProjectDetails() {
   };
 
   return (
-    <View style={{ padding: 20, marginTop: 20 }}>
-        <TouchableOpacity onPress={()=>{router.back()}}>
-
-      <Ionicons name="arrow-back-circle" size={34} color={Colors.PRIMARY} />
+    <SafeAreaView>
+      <View>
+        <TouchableOpacity
+          onPress={() => {
+            router.back();
+          }}
+          style={{ paddingLeft: 10 }}
+        >
+          <Ionicons name="arrow-back-circle" size={34} color={Colors.PRIMARY} />
         </TouchableOpacity>
-      <ProjectInfo projectData={projectData} />
-      <TaskPieChart projectData={projectData} />
-    </View>
+
+        <View>
+          <ScrollableHeader
+            projectData={projectData}
+            projectStats={projectStats}
+          />
+        </View>
+      </View>
+    </SafeAreaView>
   );
 }

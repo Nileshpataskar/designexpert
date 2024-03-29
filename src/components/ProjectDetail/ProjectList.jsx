@@ -1,14 +1,14 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
-import { getRequest } from "../utils/fetch";
-import Colors from "../utils/Colors";
+import { getRequest } from "../../utils/fetch";
+import Colors from "../../utils/Colors";
 import { useRouter } from "expo-router";
 import {
   getProgressBarWidth,
   getStatusColor,
   styles,
-} from "./ProjectDetail/ProjectInfo";
-import { dateFormatter } from "../utils/Styling";
+} from "./ProjectInfo";
+import { dateFormatter } from "../../utils/Styling";
 
 export default function ProjectList({ projects }) {
   const router = useRouter();
@@ -40,6 +40,7 @@ export default function ProjectList({ projects }) {
               elevation: 2,
               backgroundColor: Colors.PAPER,
               padding: 20,
+
               borderRadius: 10,
             }}
             onPress={() => {
@@ -55,7 +56,7 @@ export default function ProjectList({ projects }) {
                   alignItems: "center",
                 }}
               >
-                <View style={{ flex: 1 }}>
+                <View style={{ flex: 1,maxWidth:'70%' }}>
                   <Text
                     style={{
                       fontSize: 16,
@@ -67,7 +68,8 @@ export default function ProjectList({ projects }) {
                   </Text>
 
                   <Text style={{ fontSize: 14, color: "gray" }}>
-                    {project?.client_name} {"  "}
+                    {project?.client_name} 
+                    {"  "}
                     {dateFormatter(project?.deadline)}
                   </Text>
                 </View>
@@ -75,9 +77,7 @@ export default function ProjectList({ projects }) {
                   <Text style={{ fontSize: 16, fontWeight: "bold" }}>
                     {project?.amount_quoted}
                   </Text>
-                  <Text style={{ fontSize: 14, color: "gray" }}>
-                    {dateFormatter(project?.deadline)}
-                  </Text>
+                  
                 </View>
               </View>
               <View style={styles.progressBarMainContainer}>

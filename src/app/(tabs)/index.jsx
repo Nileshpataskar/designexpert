@@ -12,10 +12,11 @@ import {
 import { useEffect, useState } from "react";
 import services from "../../utils/services";
 import { getRequest } from "../../utils/fetch";
-import Header from "../../components/Header";
+import Header from "../../components/ProjectDetail/Header";
 import Colors from "../../utils/Colors";
 import { Ionicons } from "@expo/vector-icons";
-import ProjectList from "../../components/ProjectList";
+import ProjectList from "../../components/ProjectDetail/ProjectList";
+import { SafeAreaView } from "react-native-safe-area-context";
 export const handleLogout = () => {
   services.storeData("login", "false");
   router.push("/login");
@@ -25,7 +26,6 @@ export default function Home() {
   const [projects, setProjects] = useState(null);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-    console.log("api", process.env.API_URL);
 
     checkUserAuth();
     getProjects();
@@ -34,19 +34,16 @@ export default function Home() {
   const checkUserAuth = async () => {
     const result = await services.getData("login");
     const auth_key = await services.getData("token");
-    console.log("token in login", auth_key);
     if (result !== "true") {
       router.replace("/login");
     }
 
-    console.log("Result", result);
   };
 
   const getProjects = () => {
     setLoading(true);
     getRequest(`dc/api/projects/`)
       .then((res) => {
-        console.log("project", res.data);
         setProjects(res?.data);
       })
       .catch((err) => {
@@ -56,8 +53,8 @@ export default function Home() {
   };
 
   return (
-    <View style={{ marginTop: 40 }}>
-      <View style={{ padding: 20, backgroundColor: Colors.PRIMARY }}>
+    <SafeAreaView >
+      <View style={{ padding: 20, backgroundColor: Colors.SECONDARY }}>
         <Header />
       </View>
       <ScrollView
@@ -79,7 +76,7 @@ export default function Home() {
         <Ionicons name="add-circle" size={54} color={Colors.PRIMARY} />
 
       </Link> */}
-    </View>
+    </SafeAreaView>
   );
 }
 

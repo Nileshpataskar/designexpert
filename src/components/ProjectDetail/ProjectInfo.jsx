@@ -8,7 +8,7 @@ export const getStatusColor = (status) => {
     case "Completed":
       return Colors.SUCCESS;
     case "In Progress":
-      return Colors.PURPLE;
+      return Colors.WARNING;
     case "New":
       return Colors.INFO;
     default:
@@ -28,6 +28,7 @@ export const getProgressBarWidth = (status) => {
       return "0%";
   }
 };
+
 export default function ProjectInfo({ projectData }) {
   const clientId = projectData.client;
   const [client, setClient] = useState([]);
@@ -37,7 +38,6 @@ export default function ProjectInfo({ projectData }) {
   const getClient = () => {
     getRequest(`dc/api/clients/${clientId}`)
       .then((response) => {
-        console.log("response", response.data);
         setClient(response.data);
       })
       .catch((err) => {
@@ -64,7 +64,7 @@ export default function ProjectInfo({ projectData }) {
       {projectData.budget && (
         <Text style={styles.budget}>Budget: {projectData.budget}</Text>
       )}
-      <View style={styles.progressBarMainContainer}>
+      <View style={styles.progressBarMainContainer2}>
         <View
           style={[
             styles.progressBarSubContainer,
@@ -78,6 +78,14 @@ export default function ProjectInfo({ projectData }) {
 }
 
 export const styles = StyleSheet.create({
+  progressBarMainContainer2: {
+    width: "100%",
+    height: 15,
+    borderRadius: 99,
+    marginTop: 10,
+    backgroundColor: "#b7b7b7",
+    marginBottom: 40,
+  },
   progressBarMainContainer: {
     width: "100%",
     height: 15,
@@ -92,21 +100,26 @@ export const styles = StyleSheet.create({
   },
   container: {
     padding: 20,
-    backgroundColor: "#fff",
-    borderRadius: 8,
+    backgroundColor: Colors.PRIMARY,
+    // borderRadius: 8,
     marginBottom: 20,
   },
   title: {
-    fontSize: 18,
-    fontWeight: "bold",
+    fontFamily: "syne-b",
+    color: "white",
+    fontSize: 20,
+    width:'70%',
     marginBottom: 10,
   },
   description: {
+    color: Colors.SUBTITLE,
     fontSize: 16,
-    width: "70%",
+    width: "60%",
+    fontFamily: "syne-m",
     marginBottom: 10,
   },
   budget: {
+    color: "white",
     fontSize: 16,
     marginBottom: 10,
   },
@@ -122,6 +135,8 @@ export const styles = StyleSheet.create({
     marginHorizontal: 5,
   },
   client: {
+    color: "white",
+    fontFamily: "syne-m",
     fontSize: 16,
     marginBottom: 10,
   },

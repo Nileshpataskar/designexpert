@@ -9,7 +9,6 @@ export default function LoginScreen() {
 
   const router = useRouter()
   const handleSignIn = async () => {
-    console.log("gg")
 
     // await services.storeData('login', true)
     router.replace("/login/loginPage")

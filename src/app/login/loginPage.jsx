@@ -26,9 +26,7 @@ const LoginPage = () => {
     const [password, setPassword] = useState("");
     const handleSignIn = async() => {
         // Log the email and password
-        console.log("Email:", email);
-        console.log("Password:", password);
-
+        
         // Perform your POST request here
         // Example:
         fetch("https://dev.dezinexpert.com/auth/login/", {
@@ -59,8 +57,6 @@ const LoginPage = () => {
                 }
             })
             .then((data) => {
-                console.log("Response from server:", data);
-                console.log("key:", data.key); 
 
                 const token= data.key
                 if(token){
@@ -83,7 +79,6 @@ const LoginPage = () => {
 
     const handleRegister = () => {
         router.navigate("/(tabs)/register");
-        console.log("reg");
     };
     return (
         <View style={styles.loginContainer}>

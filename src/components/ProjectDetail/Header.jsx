@@ -1,7 +1,7 @@
 import { View, Text, Image } from "react-native";
 import React, { useEffect, useState } from "react";
-import { getRequest } from "../utils/fetch";
-import Colors from "../utils/Colors";
+import { getRequest } from "../../utils/fetch";
+import Colors from "../../utils/Colors";
 
 export default function Header() {
   const [user, setUser] = useState(null);
@@ -13,7 +13,6 @@ export default function Header() {
     getRequest(`auth/user/`)
       .then((res) => {
         setUser(res.data);
-        console.log("User Profile", res.data);
       })
       .catch((err) => {
         console.log("Error in user profile", err);
@@ -22,7 +21,6 @@ export default function Header() {
     getRequest(`dc/api/company/`)
       .then((res) => {
         setCompany(res.data[0]);
-        console.log("company Profile", res.data[0]);
       })
       .catch((err) => {
         console.log("Error in user profile", err);
@@ -43,9 +41,9 @@ export default function Header() {
       />
       <View>
         <View>
-          <Text style={{ color: Colors.WHITE, fontSize: 16 }}>Welcome</Text>
+          <Text style={{ color: Colors.PRIMARY, fontSize: 16 }}>Welcome</Text>
           <Text
-            style={{ color: Colors.WHITE, fontSize: 20, fontWeight: "bold" }}
+            style={{ color: Colors.PRIMARY, fontSize: 20, fontWeight: "bold" }}
           >
             {user?.first_name} {user?.last_name || user?.email}
           </Text>
