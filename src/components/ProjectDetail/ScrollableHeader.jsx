@@ -4,6 +4,7 @@ import {
   ScrollView,
   TouchableOpacity,
   StyleSheet,
+  ScrollViewBase,
 } from "react-native";
 import React, { useRef, useState } from "react";
 import { AntDesign } from "@expo/vector-icons";
@@ -14,6 +15,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import Roadmap from "../MilestoneDetails/Roadmap";
 import Accounts from "../MilestoneDetails/Accounts";
+import ProjectFiles from "../MilestoneDetails/ProjectFiles";
+import Settings from "../MilestoneDetails/Settings";
 export default function ScrollableHeader({ projectData, projectStats }) {
   const [activeTab, setActiveTab] = useState("Roadmap");
 
@@ -30,15 +33,15 @@ export default function ScrollableHeader({ projectData, projectStats }) {
       case "Accounts":
         return <Accounts />;
       case "Project Files":
-        return <Text>Project Files content goes here</Text>;
+        return <ProjectFiles />;
       case "Settings":
-        return <Text>Settings content goes here</Text>;
+        return <Settings projectData={projectData} />;
       default:
         return null;
     }
   };
   return (
-    <View>
+    <ScrollView>
       <ScrollView
         horizontal
         scrollEnabled
@@ -125,8 +128,10 @@ export default function ScrollableHeader({ projectData, projectStats }) {
           </Text>
         </TouchableOpacity>
       </ScrollView>
-      <View style={{ padding: 10 }}>{renderContent()}</View>
-    </View>
+      <ScrollView scrollEnabled style={{ padding: 10 }}>
+        {renderContent()}
+      </ScrollView>
+    </ScrollView>
   );
 }
 const styles = StyleSheet.create({

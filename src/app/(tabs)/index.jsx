@@ -17,6 +17,8 @@ import Colors from "../../utils/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import ProjectList from "../../components/ProjectDetail/ProjectList";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+
 export const handleLogout = () => {
   services.storeData("login", "false");
   router.push("/login");
@@ -26,7 +28,6 @@ export default function Home() {
   const [projects, setProjects] = useState(null);
   const [loading, setLoading] = useState(false);
   useEffect(() => {
-
     checkUserAuth();
     getProjects();
   }, []);
@@ -37,7 +38,6 @@ export default function Home() {
     if (result !== "true") {
       router.replace("/login");
     }
-
   };
 
   const getProjects = () => {
@@ -53,10 +53,7 @@ export default function Home() {
   };
 
   return (
-    <SafeAreaView >
-      <View style={{ padding: 20, backgroundColor: Colors.SECONDARY }}>
-        <Header />
-      </View>
+    <SafeAreaView style={{ backgroundColor: "#f7f5f3" }}>
       <ScrollView
         refreshControl={
           <RefreshControl
@@ -67,6 +64,10 @@ export default function Home() {
           />
         }
       >
+        <View style={{ padding: 20, backgroundColor: Colors.SECONDARY }}>
+          <Header />
+        </View>
+
         <View style={{ paddingRight: 5, paddingLeft: 5 }}>
           <ProjectList projects={projects} />
         </View>

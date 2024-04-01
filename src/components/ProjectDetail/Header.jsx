@@ -9,6 +9,7 @@ export default function Header() {
   useEffect(() => {
     getUserData();
   }, []);
+
   const getUserData = async () => {
     getRequest(`auth/user/`)
       .then((res) => {
@@ -26,6 +27,7 @@ export default function Header() {
         console.log("Error in user profile", err);
       });
   };
+  
   return (
     <View style={{ display: "flex", flexDirection: "row", gap: 8 }}>
       <Image

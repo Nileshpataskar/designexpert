@@ -32,7 +32,7 @@ export default function ProjectDetails() {
         console.log("Error", error);
       });
   };
- 
+
   const getClients = () => {
     getRequest(`dc/api/clients/`)
       .then((response) => {
@@ -68,10 +68,12 @@ export default function ProjectDetails() {
         </TouchableOpacity>
 
         <View>
-          <ScrollableHeader
-            projectData={projectData}
-            projectStats={projectStats}
-          />
+          <ScrollView>
+            <ScrollableHeader
+              projectData={projectData}
+              projectStats={projectStats}
+            />
+          </ScrollView>
         </View>
       </View>
     </SafeAreaView>

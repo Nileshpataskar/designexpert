@@ -19,16 +19,16 @@ export default function TaskPieChart({ projectData, projectStats }) {
   }
 
   // Define colors for completed and pending tasks
-  const sliceColor = [Colors.SUCCESS, Colors.PURPLE];
+  const sliceColor = [Colors.SUCCESS, Colors.INFO];
 
   // If both completed and pending tasks are 0, display all tasks as pending
   if (tasksCompleted === 0 && tasksPending === 0) {
     pendingPercentage = 100;
-    sliceColor.push(Colors.PURPLE);
+    sliceColor.push(Colors.INFO);
   } else {
     // Otherwise, define colors for completed and pending tasks
     if (tasksCompleted > 0) sliceColor.push(Colors.SUCCESS);
-    if (tasksPending > 0) sliceColor.push(Colors.PURPLE);
+    if (tasksPending > 0) sliceColor.push(Colors.INFO);
   }
 
   // Define data series for the pie chart

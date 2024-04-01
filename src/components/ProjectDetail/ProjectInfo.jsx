@@ -101,7 +101,7 @@ export const styles = StyleSheet.create({
   container: {
     padding: 20,
     backgroundColor: Colors.PRIMARY,
-    // borderRadius: 8,
+     borderRadius: 8,
     marginBottom: 20,
   },
   title: {
