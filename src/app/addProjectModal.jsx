@@ -1,10 +1,18 @@
-import { View, Text } from 'react-native'
-import React from 'react'
+import { View, Text, TextInput } from "react-native";
+import React from "react";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { globalStyles } from "../utils/globalStyles";
 
-export default function AddNewProject() {
+export default function addProjectModal() {
   return (
-    <View style={{marginTop:30}}>
-      <Text>add-new-project</Text>
+    <View style={{ padding: 20 }}>
+      <View style={globalStyles.textContainer}>
+        <MaterialCommunityIcons name="rename-box" size={24} color="black" />
+        <TextInput
+          placeholder="Project Name"
+          // style={globalStyles.textfield}
+        ></TextInput>
+      </View>
     </View>
-  )
+  );
 }

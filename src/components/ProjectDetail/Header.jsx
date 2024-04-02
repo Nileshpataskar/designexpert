@@ -27,9 +27,17 @@ export default function Header() {
         console.log("Error in user profile", err);
       });
   };
-  
+
   return (
-    <View style={{ display: "flex", flexDirection: "row", gap: 8 }}>
+    <View
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        gap: 8,
+        padding: 20,
+        backgroundColor: Colors.SECONDARY,
+      }}
+    >
       <Image
         source={{ uri: company?.logo }}
         style={{

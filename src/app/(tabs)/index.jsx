@@ -18,7 +18,6 @@ import { Ionicons } from "@expo/vector-icons";
 import ProjectList from "../../components/ProjectDetail/ProjectList";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-
 export const handleLogout = () => {
   services.storeData("login", "false");
   router.push("/login");
@@ -64,19 +63,12 @@ export default function Home() {
           />
         }
       >
-        <View style={{ padding: 20, backgroundColor: Colors.SECONDARY }}>
           <Header />
-        </View>
-
+       
         <View style={{ paddingRight: 5, paddingLeft: 5 }}>
           <ProjectList projects={projects} />
         </View>
       </ScrollView>
-
-      {/* <Link href={'/addProjectModal'} style={styles.adBtnContainer}>
-        <Ionicons name="add-circle" size={54} color={Colors.PRIMARY} />
-
-      </Link> */}
     </SafeAreaView>
   );
 }
