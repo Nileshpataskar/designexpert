@@ -8,6 +8,7 @@ import TaskPieChart from "../../../components/ProjectDetail/TaskPieChart";
 import ProjectInfo from "../../../components/ProjectDetail/ProjectInfo";
 import ScrollableHeader from "../../../components/ProjectDetail/ScrollableHeader";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { Box } from "native-base";
 export default function ProjectDetails() {
   const { projectId } = useLocalSearchParams();
   const [projectData, setProjectData] = useState([]);
@@ -58,14 +59,30 @@ export default function ProjectDetails() {
   return (
     <SafeAreaView>
       <View>
-        <TouchableOpacity
-          onPress={() => {
-            router.back();
+        <Box
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 10,
           }}
-          style={{ paddingLeft: 10 }}
         >
-          <Ionicons name="arrow-back-circle" size={34} color={Colors.PRIMARY} />
-        </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              router.back();
+            }}
+            style={{ paddingLeft: 10 }}
+          >
+            <Ionicons
+              name="arrow-back-circle"
+              size={34}
+              color={Colors.PRIMARY}
+            />
+          </TouchableOpacity>
+          <Text style={{ fontWeight: "bold", fontFamily: "outfit",fontSize:18 }}>
+            {projectData.name}
+          </Text>
+        </Box>
 
         <View>
           <ScrollView>

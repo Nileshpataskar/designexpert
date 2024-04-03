@@ -53,18 +53,21 @@ export default function ProjectInfo({ projectData }) {
           flexDirection: "row",
           alignItems: "center",
           justifyContent: "space-between",
+          padding:40
         }}
       >
-        <Text style={styles.title}>{projectData.name}</Text>
-        <Text style={styles.client}>{client.name}</Text>
+        <Text style={styles.title}>
+          {projectData.name} ({client.name})
+        </Text>
+        {projectData.amount_quoted && (
+          <Text style={styles.budget}>Budget: {projectData.amount_quoted}</Text>
+        )}
       </View>
-      {projectData.description && (
+      {/* {projectData.description && (
         <Text style={styles.description}>{projectData.description}</Text>
-      )}
-      {projectData.budget && (
-        <Text style={styles.budget}>Budget: {projectData.budget}</Text>
-      )}
-      <View style={styles.progressBarMainContainer2}>
+      )} */}
+
+      {/* <View style={styles.progressBarMainContainer2}>
         <View
           style={[
             styles.progressBarSubContainer,
@@ -72,7 +75,7 @@ export default function ProjectInfo({ projectData }) {
             { backgroundColor: getStatusColor(projectData.status) },
           ]}
         ></View>
-      </View>
+      </View> */}
     </View>
   );
 }
@@ -101,14 +104,13 @@ export const styles = StyleSheet.create({
   container: {
     padding: 20,
     backgroundColor: Colors.PRIMARY,
-     borderRadius: 8,
-    marginBottom: 20,
+    borderRadius: 8,
   },
   title: {
     fontFamily: "syne-b",
     color: "white",
     fontSize: 20,
-    width:'70%',
+    width: "70%",
     marginBottom: 10,
   },
   description: {
@@ -121,7 +123,6 @@ export const styles = StyleSheet.create({
   budget: {
     color: "white",
     fontSize: 16,
-    marginBottom: 10,
   },
   statusContainer: {
     flexDirection: "row",

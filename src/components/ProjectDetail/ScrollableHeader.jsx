@@ -55,7 +55,6 @@ export default function ScrollableHeader({ projectData, projectStats }) {
           display: "flex",
           flexDirection: "row",
           elevation: 2,
-          gap: 16,
           paddingHorizontal: 5,
         }}
       >

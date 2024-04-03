@@ -2,6 +2,7 @@ import { View, Text } from "react-native";
 import React from "react";
 import { Stack } from "expo-router";
 import { useFonts } from "expo-font";
+import { NativeBaseProvider } from "native-base";
 export default function HomeLayout() {
   const [fontsLoaded, fontError] = useFonts({
     "syne-r": require("./../../assets/fonts/Syne-Regular.ttf"),
@@ -17,34 +18,24 @@ export default function HomeLayout() {
   });
 
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen
-        name="(tabs)"
-        options={{
-          headerShown: false,
-        }}
-      />
-      <Stack.Screen
-        name="addProjectModal"
-        options={{
-          presentation: "modal",
-          headerShown: true,
-          headerTitle: " Project",
-          headerStyle: {
-            backgroundColor: "#fff", // Change header background color
-            borderBottomWidth: 1, // Add a bottom border
-            borderBottomColor: "#ccc", // Border color
-          },
-          headerTitleStyle: {
-            fontSize: 20, // Change header title font size
-            fontWeight: "bold", // Make header title bold
-            color: "#333", // Change header title color
-          },
-          headerTintColor: "#007bff", // Change the color of the back button
-          headerBackTitleVisible: false, // Hide the back button title
-          // Customize the back button icon
-        }}
-      ></Stack.Screen>
-    </Stack>
+    <NativeBaseProvider>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen
+          name="(tabs)"
+          options={{
+            headerShown: false,
+          }}
+        />
+        <Stack.Screen
+          name="addProjectModal"
+          options={{
+            presentation: "modal",
+            headerShown: true,
+            headerTitle: " Project",
+            headerBackTitleVisible: false,
+          }}
+        ></Stack.Screen>
+      </Stack>
+    </NativeBaseProvider>
   );
 }

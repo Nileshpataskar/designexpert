@@ -4,6 +4,7 @@ import { useLocalSearchParams } from "expo-router";
 import { MaterialIcons } from "@expo/vector-icons";
 import { getRequest } from "../../utils/fetch";
 import Colors from "../../utils/Colors";
+import { Box, Button } from "native-base";
 export default function ShowMilestoneList() {
   const { projectId } = useLocalSearchParams();
   const [milestoneData, setMilestoneData] = useState([]);
@@ -19,9 +20,25 @@ export default function ShowMilestoneList() {
   }, []);
   return (
     <ScrollView>
-      <Text style={{ fontSize: 24, fontWeight: "bold", marginBottom: 20 }}>
-        Milestones
-      </Text>
+      <Box
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "center",
+          width: "100%",
+          marginBottom: 20,
+        }}
+      >
+        <Text style={{ fontSize: 24, fontWeight: "bold" }}>Milestones</Text>
+        <Button
+          size={"sm"}
+          variant={"solid"}
+          colorScheme={"coolGray"}
+        >
+          Add Milestone
+        </Button>
+      </Box>
       <ScrollView style={{ maxHeight: 300 }}>
         {milestoneData?.map((data, index) => (
           <View

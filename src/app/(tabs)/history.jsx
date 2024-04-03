@@ -1,4 +1,4 @@
-import { View, Text, Button, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, Modal } from "react-native";
 import React, { useEffect, useState } from "react";
 import { handleLogout } from ".";
 import { getRequest } from "../../utils/fetch";
@@ -6,9 +6,12 @@ import { styles2 } from "../../components/ProjectDetail/ProjectList";
 import { styles } from "../../components/ProjectDetail/ProjectInfo";
 import Colors from "../../utils/Colors";
 import { dateFormatter } from "../../utils/Styling";
-
+import { AntDesign } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { globalStyles } from "../../utils/globalStyles";
+import { Link } from "expo-router";
+import AddProjectModal from "../addProjectModal";
 
 export default function History() {
   const [invoices, setInvoices] = useState([]);
@@ -28,8 +31,21 @@ export default function History() {
   const handleInvoiceClicked = (data) => {
     console.log("Clicked Invoice", data.id);
   };
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    console.log("hi");
+    setIsModalVisible(!isModalVisible); // Toggle modal visibility
+  };
   return (
     <SafeAreaView>
+      <TouchableOpacity
+        style={globalStyles.hoveringButton}
+        onPress={toggleModal}
+      >
+        <AntDesign name="pluscircle" size={40} color={Colors.PRIMARY} />
+      </TouchableOpacity>
       <ScrollView style={{ margin: 20, marginVertical: 10 }}>
         <Text style={styles2.title}>Invoice</Text>
 
@@ -78,6 +94,9 @@ export default function History() {
           </TouchableOpacity>
         ))}
       </ScrollView>
+
+        <AddProjectModal isVisible={isModalVisible} closeModal={toggleModal} />
+      
     </SafeAreaView>
   );
 }

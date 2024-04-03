@@ -24,4 +24,10 @@ export const globalStyles = StyleSheet.create({
 
     backgroundColor: "#fff",
   },
+  hoveringButton: {
+    position: "absolute",
+    bottom: 16,
+    right: 16,
+    zIndex: 100,
+  },
 });

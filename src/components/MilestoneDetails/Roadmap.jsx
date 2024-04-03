@@ -36,80 +36,70 @@ export default function Roadmap({ projectData, projectStats }) {
   const profitPercent = (profit / projectStats?.total_amount_quoted) * 100;
 
   return (
-    <ScrollView>
-      <ProjectInfo projectData={projectData} />
-
-      <View style={{ marginTop: -50, margin: 20 }}>
-        <TaskPieChart projectData={projectData} projectStats={projectStats} />
+    <ScrollView contentContainerStyle={styles.container}>
+      {/* <ProjectInfo projectData={projectData} /> */}
+      <View>
+        {/* <TaskPieChart projectData={projectData} projectStats={projectStats} /> */}
       </View>
-      <ScrollView horizontal contentContainerStyle={{ padding: 5 }} style={{}}>
-        <View style={styles.statContainer}>
-          <Text style={styles.heading}>Client Estimated Total</Text>
-          <Text style={styles.value}>
+      <View style={styles.statsContainer}>
+        <View style={styles.statItem}>
+          <Text style={styles.statTitle}>Client Estimated </Text>
+          <Text style={styles.statValue}>
             {projectStats?.total_amount_quoted?.toLocaleString("en-US") || 0}
           </Text>
         </View>
-        <View style={styles.statContainer}>
-          <Text style={styles.heading}>Estimated Profit margin</Text>
-          <Text style={styles.value}>
-            {projectStats?.total_amount_quoted?.toLocaleString("en-US") || 0}
+        <View style={styles.statItem}>
+          <Text style={styles.statTitle}>Estimated Profit </Text>
+          <Text style={styles.statValue}>
+            {profit?.toLocaleString("en-US") || 0} ({profitPercent}%)
           </Text>
         </View>
+        <View style={styles.statItem}>
+          <Text style={styles.statTitle}>Material Supplier</Text>
+          <Text style={styles.statValue}>
+            {calculatedStats?.materialCost?.toLocaleString("en-US") || 0}
+          </Text>
+        </View>
+        <View style={styles.statItem}>
+          <Text style={styles.statTitle}>Subcontractor</Text>
+          <Text style={styles.statValue}>
+            {calculatedStats?.subContractorCost?.toLocaleString("en-US") || 0}
+          </Text>
+        </View>
+      </View>
 
-        <View style={styles.statContainer}>
-          <Text style={styles.heading}>Profit Percentage</Text>
-          <Text style={styles.value}>
-            {profitPercent?.toLocaleString("en-US") || 0}
-          </Text>
-        </View>
-        <View style={styles.statContainer}>
-          <Text style={styles.heading}>Material Supplier</Text>
-          <Text style={styles.value}>
-            {calculatedStats?.materialCost?.toLocaleString("en-US")}
-          </Text>
-        </View>
-        <View style={styles.statContainer}>
-          <Text style={styles.heading}>Subcontractor</Text>
-          <Text style={styles.value}>
-            {calculatedStats?.subContractorCost.toLocaleString("en-US")}
-          </Text>
-        </View>
-      </ScrollView>
-      <ScrollView>
-        <ShowMilestoneList />
-      </ScrollView>
+      <ShowMilestoneList projectId={projectData.id} />
     </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  statContainer: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
+  container: {
+    flexGrow: 1,
+    backgroundColor: Colors.BACKGROUND,
+    padding: 10,
+  },
+  statsContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+  },
+  statItem: {
+    width: "48%",
     backgroundColor: Colors.PAPER,
-    padding: 20,
-    paddingHorizontal: 1,
-    paddingBottom: 8,
-    elevation: 1,
-    marginRight: 10,
     borderRadius: 10,
-  },
-  heading: {
-    fontFamily: "outfit",
-    fontWeight: "bold",
-    fontSize: 14,
-    color: Colors.PRIMARY,
-    paddingHorizontal: 10,
-    // maxWidth: "75%",
+    padding: 15,
     marginBottom: 10,
-    textAlign: "center",
   },
-  value: {
-    fontFamily: "outfit",
-    fontWeight: "bold",
+  statTitle: {
     fontSize: 14,
+    marginBottom: 5,
     color: Colors.PRIMARY,
-    marginBottom: 10,
+  },
+  statValue: {
+    fontSize: 16,
+    fontWeight: "bold",
+
+    color: Colors.PRIMARY,
   },
 });
