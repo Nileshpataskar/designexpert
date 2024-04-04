@@ -11,7 +11,7 @@ import { SimpleLineIcons } from "@expo/vector-icons";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { globalStyles } from "../../utils/globalStyles";
 import { Link } from "expo-router";
-import AddProjectModal from "../addProjectModal";
+import AddInvoiceModal from "../modals/AddInvoiceModal";
 
 export default function History() {
   const [invoices, setInvoices] = useState([]);
@@ -95,8 +95,7 @@ export default function History() {
         ))}
       </ScrollView>
 
-        <AddProjectModal isVisible={isModalVisible} closeModal={toggleModal} />
-      
+      <AddInvoiceModal isVisible={isModalVisible} closeModal={toggleModal} />
     </SafeAreaView>
   );
 }

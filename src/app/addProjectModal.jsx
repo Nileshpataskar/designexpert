@@ -8,10 +8,11 @@ import {
   // Button,
   StyleSheet,
   Dimensions,
+  ScrollView,
 } from "react-native";
 import Colors from "../utils/Colors";
 
-export default function CustomModal({ isVisible, closeModal }) {
+export default function AddProjectModal({ isVisible, closeModal }) {
   const [projectName, setProjectName] = useState("");
   const [client, setClient] = useState("");
   const [deadline, setDeadline] = useState("");
@@ -37,7 +38,7 @@ export default function CustomModal({ isVisible, closeModal }) {
       hardwareAccelerated={true} // Enable hardware acceleration for smoother animations
       style={styles.modalContainer} // Add custom styles for half-screen appearance
     >
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <Text style={styles.title}>Add Project</Text>
 
         <TextInput
@@ -81,7 +82,7 @@ export default function CustomModal({ isVisible, closeModal }) {
             Save
           </Button>
         </View>
-      </View>
+      </ScrollView>
     </Modal>
   );
 }

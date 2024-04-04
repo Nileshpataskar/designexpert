@@ -7,6 +7,8 @@ import { getProgressBarWidth, getStatusColor, styles } from "./ProjectInfo";
 import { dateFormatter } from "../../utils/Styling";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { SimpleLineIcons } from "@expo/vector-icons";
+import { Box, Button } from "native-base";
+import AddProjectModal from "../../app/addProjectModal";
 
 export const styles2 = StyleSheet.create({
   container: {
@@ -59,8 +61,13 @@ export const styles2 = StyleSheet.create({
 
 export default function ProjectList({ projects }) {
   const router = useRouter();
+  const [isModalVisible, setIsModalVisible] = useState(false);
   useEffect(() => {}, []);
 
+  const toggleModal = () => {
+    console.log("hi");
+    setIsModalVisible(!isModalVisible); // Toggle modal visibility
+  };
   const handleProjectClicked = (project) => {
     router.push({
       pathname: "/pages/project/projectDetails",
@@ -78,7 +85,26 @@ export default function ProjectList({ projects }) {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <View style={styles2.container}>
-        <Text style={styles2.title}>Projects</Text>
+        <Box
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            justifyContent: "space-between",
+            alignItems: "center",
+            width: "100%",
+            marginBottom: 20,
+          }}
+        >
+          <Text style={{ fontSize: 24, fontWeight: "bold" }}>Projects</Text>
+          <Button
+            size={"sm"}
+            variant={"solid"}
+            colorScheme={"coolGray"}
+            onPress={toggleModal}
+          >
+            Add Project
+          </Button>
+        </Box>
         {projects?.map((project, index) => (
           <TouchableOpacity
             key={index}
@@ -137,6 +163,8 @@ export default function ProjectList({ projects }) {
           </TouchableOpacity>
         ))}
       </View>
+
+      <AddProjectModal isVisible={isModalVisible} closeModal={toggleModal} />
     </SafeAreaView>
   );
 }
