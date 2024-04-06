@@ -24,10 +24,38 @@ export const globalStyles = StyleSheet.create({
 
     backgroundColor: "#fff",
   },
-  hoveringButton: {
-    position: "absolute",
-    bottom: 16,
-    right: 16,
-    zIndex: 100,
+  hoveringButton: {},
+  button: {
+    flex: 1,
+    padding: 10,
+    borderRadius: 10,
+    marginHorizontal: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  saveButton: {
+    backgroundColor: "green",
+    padding: 15,
+    borderRadius: 8,
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+  },
+  clickableSubInput: {
+    flex: 1,
+    borderRadius: 6,
+    marginLeft: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 10,
+    borderWidth: 1,
+    borderColor: Colors.GRAY,
+  },
+  clickableInputContainer: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 20,
+    borderColor: Colors.GRAY,
+    borderRadius: 6,
   },
 });

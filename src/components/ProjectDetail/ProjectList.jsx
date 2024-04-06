@@ -9,6 +9,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { Box, Button } from "native-base";
 import AddProjectModal from "../../app/addProjectModal";
+import AddCompanyModal from "../../app/modals/AddCompanyModal";
 
 export const styles2 = StyleSheet.create({
   container: {
@@ -59,14 +60,19 @@ export const styles2 = StyleSheet.create({
   },
 });
 
-export default function ProjectList({ projects }) {
+export default function ProjectList({ projects, getProjects }) {
   const router = useRouter();
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isCompanyModalVisible, setIsCompanyModalVisible] = useState(false);
   useEffect(() => {}, []);
 
   const toggleModal = () => {
     console.log("hi");
     setIsModalVisible(!isModalVisible); // Toggle modal visibility
+  };
+  const toggleCompanyModal = () => {
+    console.log("hi");
+    setIsCompanyModalVisible(!isCompanyModalVisible); // Toggle modal visibility
   };
   const handleProjectClicked = (project) => {
     router.push({
@@ -96,14 +102,18 @@ export default function ProjectList({ projects }) {
           }}
         >
           <Text style={{ fontSize: 24, fontWeight: "bold" }}>Projects</Text>
-          <Button
-            size={"sm"}
-            variant={"solid"}
-            colorScheme={"coolGray"}
-            onPress={toggleModal}
-          >
-            Add Project
-          </Button>
+
+          <View style={{ display: "flex", flexDirection: "row", gap: 5 }}>
+            
+            <Button
+              size={"sm"}
+              variant={"solid"}
+              colorScheme={"coolGray"}
+              onPress={toggleModal}
+            >
+              Add Project
+            </Button>
+          </View>
         </Box>
         {projects?.map((project, index) => (
           <TouchableOpacity
@@ -164,7 +174,11 @@ export default function ProjectList({ projects }) {
         ))}
       </View>
 
-      <AddProjectModal isVisible={isModalVisible} closeModal={toggleModal} />
+      <AddProjectModal isVisible={isModalVisible} closeModal={toggleModal} getProjects={getProjects}/>
+      <AddCompanyModal
+        isVisible={isCompanyModalVisible}
+        closeModal={toggleCompanyModal}
+      />
     </SafeAreaView>
   );
 }

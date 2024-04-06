@@ -16,6 +16,9 @@ export default function Profile() {
         click
       </Link>
 
+      <Link href="/login/Register">
+        <Text>Register</Text>
+      </Link>
       <Button title="Logout" onPress={handleLogout}></Button>
     </SafeAreaView>
   );

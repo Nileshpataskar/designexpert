@@ -40,15 +40,23 @@ export default function History() {
   };
   return (
     <SafeAreaView>
-      <TouchableOpacity
-        style={globalStyles.hoveringButton}
-        onPress={toggleModal}
-      >
-        <AntDesign name="pluscircle" size={40} color={Colors.PRIMARY} />
-      </TouchableOpacity>
       <ScrollView style={{ margin: 20, marginVertical: 10 }}>
         <Text style={styles2.title}>Invoice</Text>
+        <View style={{ alignItems: "flex-end", marginBottom: 10 }}>
+          <TouchableOpacity
+            style={{
+              backgroundColor: Colors.PRIMARY,
+              width: 100,
+              padding: 10,
+              borderRadius: 10,
+            }}
+            onPress={toggleModal}
+          >
+            <Text style={{ color: Colors.WHITE }}>Add Invoice</Text>
+          </TouchableOpacity>
+        </View>
 
+        
         {invoices?.map((data, index) => (
           <TouchableOpacity
             key={index}
@@ -95,7 +103,11 @@ export default function History() {
         ))}
       </ScrollView>
 
-      <AddInvoiceModal isVisible={isModalVisible} closeModal={toggleModal} />
+      <AddInvoiceModal
+        isVisible={isModalVisible}
+        closeModal={toggleModal}
+        getInvoice={getInvoice}
+      />
     </SafeAreaView>
   );
 }

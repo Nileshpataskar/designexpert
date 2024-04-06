@@ -63,10 +63,10 @@ export default function Home() {
           />
         }
       >
-          <Header />
-       
+        <Header />
+
         <View style={{ paddingRight: 5, paddingLeft: 5 }}>
-          <ProjectList projects={projects} />
+          <ProjectList projects={projects} getProjects={getProjects} />
         </View>
       </ScrollView>
     </SafeAreaView>

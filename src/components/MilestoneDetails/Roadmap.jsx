@@ -51,7 +51,7 @@ export default function Roadmap({ projectData, projectStats }) {
         <View style={styles.statItem}>
           <Text style={styles.statTitle}>Estimated Profit </Text>
           <Text style={styles.statValue}>
-            {profit?.toLocaleString("en-US") || 0} ({profitPercent}%)
+            {profit?.toLocaleString("en-US") || 0} ({profitPercent.toFixed(1)}%)
           </Text>
         </View>
         <View style={styles.statItem}>

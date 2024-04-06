@@ -14,6 +14,7 @@ import {
 } from "react-native";
 import { customStyle, defaultStyles } from "../../utils/Styling";
 import services from "../../utils/services";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 // https://github.com/clerkinc/clerk-expo-starter/blob/main/components/OAuth.tsx
 // import { useWarmUpBrowser } from '@/hooks/useWarmUpBrowser';
@@ -78,10 +79,10 @@ const LoginPage = () => {
     };
 
     const handleRegister = () => {
-        router.navigate("/(tabs)/register");
+        router.navigate("/login/Register");
     };
     return (
-        <View style={styles.loginContainer}>
+        <SafeAreaView style={styles.loginContainer}>
             <View style={customStyle.getCenter} className="mt:10">
                 <Text style={customStyle.logo}>Design Expert</Text>
             </View>
@@ -140,7 +141,7 @@ const LoginPage = () => {
                     <Text>Not a Registered User? Sign Up</Text>
                 </TouchableOpacity>
             </View>
-        </View>
+        </SafeAreaView>
     );
 };
 

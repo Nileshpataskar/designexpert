@@ -69,16 +69,47 @@ export async function patchRequest(url, data) {
   const auth_key = await services.getData("token");
 
   try {
-    const response = await axios.patch(
-      `${process.env.API_URL}${url}`,
-      data,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Token ${auth_key}`,
-        },
-      }
-    );
+    const response = await axios.patch(`${process.env.API_URL}${url}`, data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${auth_key}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    // console.log(error)
+    // handleRedirect(error?.response?.status)
+    throw error?.response;
+  }
+}
+
+export async function postRequest(url, data) {
+  const auth_key = await services.getData("token");
+
+  try {
+    const response = await axios.post(process.env.API_URL + url, data, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Token ${auth_key}`,
+      },
+    });
+    return response;
+  } catch (error) {
+    // console.log(error)
+    // handleRedirect(error?.response?.status)
+    throw error?.response;
+  }
+}
+export async function postRequestMultipart(url, data) {
+  const auth_key = await services.getData("token");
+
+  try {
+    const response = await axios.post(process.env.API_URL + url, data, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Token ${auth_key}`,
+      },
+    });
     return response;
   } catch (error) {
     // console.log(error)

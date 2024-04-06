@@ -1,12 +1,28 @@
-import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet, ToastAndroid } from "react-native";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ToastAndroid,
+} from "react-native";
 import Colors from "../../utils/Colors";
 import { patchRequest } from "../../utils/fetch";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import { Button } from "native-base";
+import AddProjectModal from "../../app/addProjectModal";
 
 export default function Settings({ projectData, settings }) {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
   const { projectId } = useLocalSearchParams();
+  const [isCompanyModalVisible, setIsCompanyModalVisible] = useState(false);
+
+  const [projectIdValue, setProjectIdValue] = useState(null);
   const router = useRouter();
+  useEffect(() => {
+    setProjectIdValue(projectId);
+  }, []);
   const handleDeactive = () => {
     patchRequest(`dc/api/projects/${projectId}/`, {
       active: false,
@@ -26,8 +42,39 @@ export default function Settings({ projectData, settings }) {
         console.log("Error whhile deactivate", error);
       });
   };
+  const toggleCompanyModal = () => {
+    console.log("hi");
+    setIsCompanyModalVisible(!isCompanyModalVisible); // Toggle modal visibility
+  };
+
+  const toggleModal = () => {
+    console.log("hi");
+    setIsModalVisible(!isModalVisible); // Toggle modal visibility
+  };
+  const handleEditProject = () => {
+    toggleModal();
+  };
   return (
     <View style={styles.container}>
+      <View style={styles.card}>
+        {/* <Button
+          size="sm"
+          variant="outline"
+          colorScheme="black"
+          onPress={handleEditProject}
+        >
+          Edit Project
+        </Button> */}
+
+        <Button
+          size={"sm"}
+          variant={"solid"}
+          colorScheme={"coolGray"}
+          onPress={toggleCompanyModal}
+        >
+          Add Company
+        </Button>
+      </View>
       <View style={styles.card}>
         <Text style={styles.title}>Deactivate Project</Text>
         <Text style={styles.description}>
@@ -43,6 +90,12 @@ export default function Settings({ projectData, settings }) {
       >
         <Text style={styles.buttonText}>Deactivate</Text>
       </TouchableOpacity>
+
+      <AddProjectModal
+        isVisible={isModalVisible}
+        closeModal={toggleModal}
+        projectIdValue={projectIdValue}
+      />
     </View>
   );
 }

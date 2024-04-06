@@ -5,11 +5,16 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { getRequest } from "../../utils/fetch";
 import Colors from "../../utils/Colors";
 import { Box, Button } from "native-base";
+import AddMilestoneModal from "../../app/modals/AddMilestoneModal";
 export default function ShowMilestoneList() {
   const { projectId } = useLocalSearchParams();
   const [milestoneData, setMilestoneData] = useState([]);
 
   useEffect(() => {
+    getMilestones();
+  }, []);
+
+  const getMilestones = () => {
     getRequest(`dc/api/milestones/?project__id=${projectId}`)
       .then((response) => {
         setMilestoneData(response.data);
@@ -17,7 +22,14 @@ export default function ShowMilestoneList() {
       .catch((err) => {
         console.log("error while file Milestone file");
       });
-  }, []);
+  };
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const toggleModal = () => {
+    console.log("hi");
+    setIsModalVisible(!isModalVisible); // Toggle modal visibility
+  };
   return (
     <ScrollView>
       <Box
@@ -35,6 +47,7 @@ export default function ShowMilestoneList() {
           size={"sm"}
           variant={"solid"}
           colorScheme={"coolGray"}
+          onPress={toggleModal}
         >
           Add Milestone
         </Button>
@@ -84,6 +97,11 @@ export default function ShowMilestoneList() {
           </View>
         ))}
       </ScrollView>
+      <AddMilestoneModal
+        isVisible={isModalVisible}
+        closeModal={toggleModal}
+        getMilestones={getMilestones}
+      />
     </ScrollView>
   );
 }

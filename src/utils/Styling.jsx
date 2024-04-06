@@ -49,14 +49,15 @@ export const customStyle = StyleSheet.create({
   },
   logo: {
     fontSize: 28,
-    fontStyle: "normal",
+    fontStyle: "Bold",
+    fontFamily:'metro'
   },
   getCenter: {
     display: "flex",
     justifyContent: "center",
     width: "100%",
-    // backgroundColor: "pink",
     alignItems: "center",
+    marginBottom:30,
     marginVertical: 10,
   },
   //airbnb
