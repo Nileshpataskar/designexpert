@@ -69,7 +69,7 @@ export default function Register() {
         );
         setLoading(false);
       });
-    console.log("signu");
+    console.log("signup");
   };
   return (
     <SafeAreaView

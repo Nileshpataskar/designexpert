@@ -42,6 +42,10 @@ export default function AddProjectModal({
     }
   }, [projectIdValue]);
 
+  useEffect(() => {
+    getClients();
+  }, [isVisible]);
+
   const getProject = () => {
     getRequest(`dc/api/projects/${projectIdValue}`)
       .then((response) => {
@@ -147,7 +151,7 @@ export default function AddProjectModal({
             <AntDesign name="close" size={24} color="black" />
           </TouchableOpacity>
 
-          <Text style={{ fontWeight: 600, fontSize: 18 }}>Add Milestone</Text>
+          <Text style={{ fontWeight: 600, fontSize: 18 }}>Add Project</Text>
         </View>
 
         <View style={styles.textInputContainer}>

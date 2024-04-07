@@ -29,7 +29,7 @@ export default function Home() {
   useEffect(() => {
     checkUserAuth();
     getProjects();
-  }, []);
+  }, [router]);
 
   const checkUserAuth = async () => {
     const result = await services.getData("login");

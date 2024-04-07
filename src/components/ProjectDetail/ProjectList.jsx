@@ -1,4 +1,10 @@
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ToastAndroid,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { getRequest } from "../../utils/fetch";
 import Colors from "../../utils/Colors";
@@ -64,11 +70,38 @@ export default function ProjectList({ projects, getProjects }) {
   const router = useRouter();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isCompanyModalVisible, setIsCompanyModalVisible] = useState(false);
-  useEffect(() => {}, []);
+  const [company, setCompany] = useState(null);
+
+  
+  useEffect(() => {
+    console.log("ppp")
+    getCompany();
+  }, []);
+
+  const getCompany = () => {
+    getRequest("dc/api/company/")
+      .then((res) => {
+        console.log("Company successfully loaded", res.data);
+        setCompany(res.data);
+      })
+      .catch((err) => {
+        console.log("Company failed");
+      });
+  };
 
   const toggleModal = () => {
     console.log("hi");
-    setIsModalVisible(!isModalVisible); // Toggle modal visibility
+    if (company.length > 0) {
+      setIsModalVisible(!isModalVisible); // Toggle modal visibility
+    } else {
+      ToastAndroid.showWithGravity(
+        "Please Enter Firm Details Before Proceeding!",
+        ToastAndroid.SHORT,
+        ToastAndroid.BOTTOM
+      );
+
+      router.replace("/(tabs)/profile/");
+    }
   };
   const toggleCompanyModal = () => {
     console.log("hi");
@@ -104,7 +137,6 @@ export default function ProjectList({ projects, getProjects }) {
           <Text style={{ fontSize: 24, fontWeight: "bold" }}>Projects</Text>
 
           <View style={{ display: "flex", flexDirection: "row", gap: 5 }}>
-            
             <Button
               size={"sm"}
               variant={"solid"}
@@ -115,66 +147,88 @@ export default function ProjectList({ projects, getProjects }) {
             </Button>
           </View>
         </Box>
-        {projects?.map((project, index) => (
-          <TouchableOpacity
-            key={index}
-            style={styles2.projectCard}
-            onPress={() => handleProjectClicked(project)}
-          >
-            <View style={styles2.projectInfo}>
-              <View
-                style={{
-                  backgroundColor: Colors.SUCCESS,
-                  width: 60,
-                  height: 50,
-                  marginRight: 15,
-                  borderRadius: 4,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Text style={{ fontWeight: "bold", color: Colors.WHITE }}>
-                  {dateFormatter(project?.deadline).day}
-                </Text>
-                <View style={{ flexDirection: "row" }}>
-                  <Text style={{ color: Colors.WHITE }}>
-                    {dateFormatter(project?.deadline).month} -
+
+        {projects?.length > 0 ? (
+          projects?.map((project, index) => (
+            <TouchableOpacity
+              key={index}
+              style={styles2.projectCard}
+              onPress={() => handleProjectClicked(project)}
+            >
+              <View style={styles2.projectInfo}>
+                <View
+                  style={{
+                    backgroundColor: Colors.SUCCESS,
+                    width: 60,
+                    height: 50,
+                    marginRight: 15,
+                    borderRadius: 4,
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Text style={{ fontWeight: "bold", color: Colors.WHITE }}>
+                    {dateFormatter(project?.deadline).day}
                   </Text>
-                  <Text style={{ color: Colors.WHITE }}>
-                    {dateFormatter(project?.deadline).year}
+                  <View style={{ flexDirection: "row" }}>
+                    <Text style={{ color: Colors.WHITE }}>
+                      {dateFormatter(project?.deadline).month} -
+                    </Text>
+                    <Text style={{ color: Colors.WHITE }}>
+                      {dateFormatter(project?.deadline).year}
+                    </Text>
+                  </View>
+                </View>
+                <View style={styles2.projectDetails}>
+                  <Text style={styles2.projectName}>{project?.name}</Text>
+                  <Text style={styles2.projectClient}>
+                    {project?.client_name}
                   </Text>
+                  <Text>{project?.amount_quoted}</Text>
+                </View>
+                <View style={styles2.amountQuoted}>
+                  <SimpleLineIcons
+                    name="options-vertical"
+                    size={20}
+                    color="black"
+                  />
                 </View>
               </View>
-              <View style={styles2.projectDetails}>
-                <Text style={styles2.projectName}>{project?.name}</Text>
-                <Text style={styles2.projectClient}>
-                  {project?.client_name}
-                </Text>
-                <Text>{project?.amount_quoted}</Text>
+              <View style={styles.progressBarMainContainer}>
+                <View
+                  style={[
+                    styles.progressBarSubContainer,
+                    { width: getProgressBarWidth(project.status) },
+                    { backgroundColor: getStatusColor(project.status) },
+                  ]}
+                ></View>
               </View>
-              <View style={styles2.amountQuoted}>
-                <SimpleLineIcons
-                  name="options-vertical"
-                  size={20}
-                  color="black"
-                />
-              </View>
-            </View>
-            <View style={styles.progressBarMainContainer}>
-              <View
-                style={[
-                  styles.progressBarSubContainer,
-                  { width: getProgressBarWidth(project.status) },
-                  { backgroundColor: getStatusColor(project.status) },
-                ]}
-              ></View>
-            </View>
-          </TouchableOpacity>
-        ))}
+            </TouchableOpacity>
+          ))
+        ) : (
+          <View
+            style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          >
+            <Text
+              style={{
+                marginVertical: 70,
+                fontSize: 20,
+                fontWeight: "bold",
+                color: Colors.PRIMARY,
+              }}
+            >
+              No Projects Yet!!!
+            </Text>
+          </View>
+        )}
       </View>
 
-      <AddProjectModal isVisible={isModalVisible} closeModal={toggleModal} getProjects={getProjects}/>
+      <AddProjectModal
+        isVisible={isModalVisible}
+        closeModal={toggleModal}
+        getProjects={getProjects}
+      />
       <AddCompanyModal
         isVisible={isCompanyModalVisible}
         closeModal={toggleCompanyModal}

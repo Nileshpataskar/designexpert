@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -15,6 +15,8 @@ import Colors from "../../utils/Colors";
 import { FontAwesome } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import RNPickerSelect from "react-native-picker-select";
+import { AutocompleteDropdown } from "react-native-autocomplete-dropdown";
+import { postRequest } from "../../utils/fetch";
 
 // Predefined units
 const PredefinedUnits = [
@@ -48,6 +50,38 @@ export default function AddItem({
   const [isMarginInputVisible, setIsMarginInputVisible] = useState(false);
   const [isLabourInputVisible, setIsLabourInputVisible] = useState(false);
   const [selectedUnit, setSelectedUnit] = useState(null);
+  const [suggestedItems, setSuggestedItems] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const fetchItemSuggestions = (searchTerm) => {
+    setLoading(true);
+
+    postRequest("dc/accounting/search-items/", {
+      search: searchTerm,
+    })
+      .then((response) => {
+        console.log("suggested item", response.data.items);
+        setSuggestedItems(response.data.items || []);
+      })
+      .catch((error) => {
+        console.error("Error fetching item suggestions:", error);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    let timeoutId;
+    if (itemName && itemName.length >= 3) {
+      timeoutId = setTimeout(() => {
+        fetchItemSuggestions(itemName);
+      }, 50);
+    } else {
+      setSuggestedItems([]);
+    }
+    return () => clearTimeout(timeoutId);
+  }, [itemName]);
 
   const handleSaveItem = () => {
     if (!itemName) {
@@ -148,11 +182,14 @@ export default function AddItem({
                     color="black"
                     style={styles.icon}
                   />
-                  <TextInput
-                    placeholder="Item Name"
+                  <AutocompleteDropdown
+                    data={suggestedItems}
                     value={itemName}
                     onChangeText={setItemName}
-                    style={styles.input}
+                    placeholder="Item Name"
+                    loading={loading}
+                    containerStyle={{ flex: 1 }} // Set flex to 1 to make it fill the entire width
+                    inputContainerStyle={{ backgroundColor: "transparent" }} // Make the background transparent
                   />
                 </View>
                 {isGstEnabled && (
@@ -174,7 +211,7 @@ export default function AddItem({
               </HStack>
               <HStack space={3} alignItems="center">
                 <View
-                  style={[styles.inputContainer, { borderWidth: 0, flex: 1.2 }]}
+                  style={[styles.inputContainer, { borderWidth: 0, flex: 1.5 }]}
                 >
                   <RNPickerSelect
                     placeholder={{
@@ -200,7 +237,7 @@ export default function AddItem({
                 </View>
                 <View style={styles.inputContainer}>
                   <TextInput
-                    placeholder="Cost Per Unit"
+                    placeholder="Cost/unit"
                     value={costperunit.toString()}
                     onChangeText={(text) =>
                       setCostPerUnit(parseFloat(text) || 0)
@@ -437,6 +474,7 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     paddingHorizontal: 10,
     borderWidth: 1,
+
     borderColor: Colors.GRAY,
     borderRadius: 6,
     color: "black",

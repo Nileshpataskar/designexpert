@@ -57,7 +57,7 @@ export default function AddInvoiceModal({ isVisible, closeModal, getInvoice }) {
     getCompany();
     getClients();
     getInvoiceNumber();
-  }, []);
+  }, [isVisible]);
 
   const getCompany = () => {
     getRequest(`dc/api/company/`)
@@ -69,9 +69,6 @@ export default function AddInvoiceModal({ isVisible, closeModal, getInvoice }) {
       });
   };
   useEffect(() => {
-    console.log("isGstEnabled", isGstEnabled);
-    console.log("invNumberParam", invNumberParam);
-
     getInvoiceNumber();
   }, []);
   useEffect(() => {
@@ -79,18 +76,19 @@ export default function AddInvoiceModal({ isVisible, closeModal, getInvoice }) {
   }, [company]);
 
   useEffect(() => {
+    console.log("isGstEnabled", isGstEnabled);
     console.log("invNumberParam", invNumberParam);
 
-    // Update invNumberParam based on the state of isGstEnabled
-    setInvNumberParam(isGstEnabled ? "0" : "1");
+    setInvNumberParam(!isGstEnabled ? "1" : "0");
     getInvoiceNumber();
-  }, [isGstEnabled]);
+  }, [isGstEnabled, isVisible]);
 
   const getInvoiceNumber = () => {
     if (company) {
       setInvLoading(true);
 
       let companyID = company.id;
+      console.log("company id", companyID);
       getRequest(`dc/accounting/invnumber/${companyID}/${invNumberParam}`)
         .then((response) => {
           console.log("response in invinvNumberParam ", invNumberParam);
@@ -151,6 +149,7 @@ export default function AddInvoiceModal({ isVisible, closeModal, getInvoice }) {
       date,
       due_date: deadline,
       company: company.id,
+      total: finalTotal,
       data: {
         items: items,
       },
@@ -181,8 +180,8 @@ export default function AddInvoiceModal({ isVisible, closeModal, getInvoice }) {
     setInvNumberParam(null);
     setAddItemModalVisible(false);
     setInvLoading(false);
-    setDeadline(new Date());
-    setDate(new Date());
+    setDeadline(getCurrentDate());
+    setDate(getCurrentDate());
     setDatePickerVisibility(false);
     closeModal();
   };
@@ -190,8 +189,8 @@ export default function AddInvoiceModal({ isVisible, closeModal, getInvoice }) {
     setAddItemModalVisible(true);
   };
 
-  const handleToggleSwitch = (value) => {
-    setIsGstEnabled(value);
+  const handleToggleSwitch = () => {
+    setIsGstEnabled(!isGstEnabled);
   };
 
   // Calculate finalAmount amount for all items

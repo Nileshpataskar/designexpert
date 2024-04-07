@@ -90,7 +90,7 @@ export default function Accounts() {
             flexDirection: "row",
           }}
         >
-          <TouchableOpacity
+          {/* <TouchableOpacity
             style={{
               backgroundColor: Colors.PRIMARY,
               width: 100,
@@ -100,7 +100,7 @@ export default function Accounts() {
             onPress={toggleModal}
           >
             <Text style={{ color: Colors.WHITE }}>Add Invoice</Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
         {invoices?.map((data, index) => (
           <TouchableOpacity

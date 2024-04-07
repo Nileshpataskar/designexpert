@@ -3,6 +3,7 @@ import services from "./services";
 
 export async function getRequest(url) {
   const auth_key = await services.getData("token");
+  console.log("Tokenn", auth_key);
 
   try {
     const response = await axios.get(`${process.env.API_URL}${url}`, {

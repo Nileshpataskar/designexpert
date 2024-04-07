@@ -166,6 +166,7 @@ export default function AddCompanyModal({ isVisible, closeModal }) {
               color={Colors.GRAY}
             />
             <TextInput
+            maxLength={15} 
               style={styles.input}
               placeholder="GST No."
               value={gst}
@@ -178,6 +179,7 @@ export default function AddCompanyModal({ isVisible, closeModal }) {
             <TextInput
               style={styles.input}
               placeholder="Firm Prefix"
+              maxLength={5} 
               value={prefix}
               onChangeText={(text) => setPrefix(text)}
             />
